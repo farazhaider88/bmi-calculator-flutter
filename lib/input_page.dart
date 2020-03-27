@@ -1,9 +1,12 @@
+import 'package:bmi_calculator/results_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'reusable_card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'IconContent.dart';
 import 'constants.dart';
+import 'bottom_button.dart';
+import 'calculator_brain.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -213,11 +216,20 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(top: 10),
-            color: kBottomContainerColour,
-            height: kBottomContainerHeight,
-            width: double.infinity,
+          BottomButton(
+            onTap: () {
+              CalculatorBrain calc =
+                  CalculatorBrain(height: height, weight: weight);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ResultPage(
+                            bmiResult: calc.calculateBMI(),
+                            resultText: calc.getResult(),
+                            interpretation: calc.getInterpretion(),
+                          )));
+            },
+            buttonTitle: 'Calculate',
           ),
         ],
       ),
